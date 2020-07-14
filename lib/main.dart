@@ -25,6 +25,21 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  // ignore: non_constant_identifier_names
+  List<Icon> Scorekeeper = [
+    Icon(
+      Icons.check_circle_outline,
+      color: Colors.green,
+    ),
+    Icon(
+      Icons.check_circle_outline,
+      color: Colors.green,
+    ),
+    Icon(
+      Icons.check_circle_outline,
+      color: Colors.green,
+    )
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,6 +76,12 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                setState(() {
+                  Scorekeeper.add(Icon(
+                    Icons.check_circle_outline,
+                    color: Colors.green,
+                  ));
+                });
                 //The user picked true.
               },
             ),
@@ -85,6 +106,9 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         //TODO: Add a Row here as your score keeper
+        Row(
+          children: Scorekeeper,
+        )
       ],
     );
   }
