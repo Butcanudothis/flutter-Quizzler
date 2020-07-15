@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
 
 void main() => runApp(Quizzler());
 
@@ -25,21 +26,27 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  // ignore: non_constant_identifier_names
-  List<Icon> Scorekeeper = [
-    Icon(
-      Icons.check_circle_outline,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.check_circle_outline,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.check_circle_outline,
-      color: Colors.green,
+  List<Icon> scoreKeeper = [];
+//  List<String> questions = [
+//    'You can lead a cow down stairs but not up stairs.',
+//    'Approximately one quarter of human bones are in the feet.',
+//    'A slug\'s blood is green.'
+//  ];
+//  List<bool> answers = [
+//    false,
+//    true,
+//    true,
+//  ];
+  List<Question> o = [
+    Question('You can lead a cow down stairs but not up stairs.', false),
+    Question('Approximately one quarter of human bones are in the feet.', true),
+    Question(
+      'A slug\'s blood is green.',
+      true,
     )
   ];
+
+  int questionNumber = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,7 +59,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                o[questionNumber].ques,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -66,6 +73,7 @@ class _QuizPageState extends State<QuizPage> {
           child: Padding(
             padding: EdgeInsets.all(15.0),
             child: FlatButton(
+              highlightColor: Colors.amber,
               textColor: Colors.white,
               color: Colors.green,
               child: Text(
@@ -76,13 +84,21 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  Scorekeeper.add(Icon(
-                    Icons.check_circle_outline,
-                    color: Colors.green,
-                  ));
-                });
                 //The user picked true.
+                setState(() {
+                  if (o[questionNumber].ans) {
+                    scoreKeeper.add(Icon(
+                      Icons.add_circle_outline,
+                      color: Colors.green,
+                    ));
+                  } else {
+                    scoreKeeper.add(Icon(
+                      Icons.remove_circle_outline,
+                      color: Colors.red,
+                    ));
+                  }
+                  questionNumber++;
+                });
               },
             ),
           ),
@@ -91,6 +107,7 @@ class _QuizPageState extends State<QuizPage> {
           child: Padding(
             padding: EdgeInsets.all(15.0),
             child: FlatButton(
+              highlightColor: Colors.amber,
               color: Colors.red,
               child: Text(
                 'False',
@@ -101,13 +118,27 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
+                setState(() {
+                  if (!o[questionNumber].ans) {
+                    scoreKeeper.add(Icon(
+                      Icons.add_circle_outline,
+                      color: Colors.green,
+                    ));
+                  } else {
+                    scoreKeeper.add(Icon(
+                      Icons.remove_circle_outline,
+                      color: Colors.red,
+                    ));
+                  }
+                  questionNumber++;
+                });
               },
             ),
           ),
         ),
         //TODO: Add a Row here as your score keeper
         Row(
-          children: Scorekeeper,
+          children: scoreKeeper,
         )
       ],
     );
@@ -115,7 +146,7 @@ class _QuizPageState extends State<QuizPage> {
 }
 
 /*
-question1: 'You can lead a cow down stairs but not up stairs.', false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.', true,
+question2: 'Approximately one quarter of human bones are in the feet.',           true,
+question1: 'You can lead a cow down stairs but not up stairs.',                   false,
+question3: 'A slug\'s blood is green.',                                           true,
 */
