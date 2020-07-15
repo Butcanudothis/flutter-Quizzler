@@ -42,4 +42,15 @@ class QuizBrain {
   bool getAns() {
     return _o[_questionNumber].ans;
   }
+
+  bool isFinished() {
+    if (_questionNumber == 12)
+      return true;
+    else
+      return false;
+  }
+
+  void reset() {
+    _questionNumber = 0;
+  }
 }
