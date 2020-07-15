@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'quizbrain.dart';
 
-QuizBrain qb;
+QuizBrain qb = new QuizBrain();
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -29,7 +29,6 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
-  int questionNumber = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,7 +41,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                qb.o[questionNumber].ques,
+                qb.getQuesText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -69,7 +68,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //The user picked true.
                 setState(() {
-                  if (qb.o[questionNumber].ans) {
+                  if (qb.getAns()) {
                     scoreKeeper.add(Icon(
                       Icons.add_circle_outline,
                       color: Colors.green,
@@ -80,7 +79,7 @@ class _QuizPageState extends State<QuizPage> {
                       color: Colors.red,
                     ));
                   }
-                  questionNumber++;
+                  qb.nextQ();
                 });
               },
             ),
@@ -102,7 +101,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //The user picked false.
                 setState(() {
-                  if (!qb.o[questionNumber].ans) {
+                  if (!qb.getAns()) {
                     scoreKeeper.add(Icon(
                       Icons.add_circle_outline,
                       color: Colors.green,
@@ -113,7 +112,7 @@ class _QuizPageState extends State<QuizPage> {
                       color: Colors.red,
                     ));
                   }
-                  questionNumber++;
+                  qb.nextQ();
                 });
               },
             ),
